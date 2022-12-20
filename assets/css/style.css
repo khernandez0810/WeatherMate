@@ -1,5 +1,5 @@
 :root {
-	--primary: white;
+	--primary:white ;
 	--secondary: #9caea9;
 	--tertiary: #788585;
 	--light-dark: cadetblue;
@@ -9,6 +9,7 @@
 
 * {
 	box-sizing: border-box;
+
 }
 
 #search-bar{
@@ -20,9 +21,15 @@
 
 }
 
+#history-card{
+
+	width: 65%;
+
+}
+
 img{
 float: right;
-padding-right: 40%;
+padding-right: 30%;
 max-width: 100%;
 object-fit: contain;
 }
@@ -35,8 +42,11 @@ object-fit: contain;
 
 .selected-city{
 height: 200px;
-    margin-bottom: 15px;
-    background-color:bisque;
+    margin-bottom: 10px;
+	width: 950px;
+	padding:20px;
+	background-color: lightblue;
+	border-radius: 20px;
 }
 
 .future-forecast{
@@ -56,6 +66,10 @@ padding: 10px;
     height: 300px;
     width: 200px;
     margin-right: 10px;
+	background-color: lightblue;
+	padding: 10px;
+	margin-bottom: 10px;
+	border-radius: 20px;
     
 }
 

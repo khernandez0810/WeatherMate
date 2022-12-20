@@ -5,6 +5,9 @@ var currentCityWind = document.querySelector('#currentCityWind');
 var currentCityHumidity = document.querySelector('#currentCityHumidity');
 var searchBtn = document.querySelector('#searchbtn');
 var currentCityIcon = document.querySelector('#currentCityIcon')
+var historyCard = document.getElementById("history-card");
+var mainWeather = document.getElementById("main-weather");
+var futureCard = document.querySelector('#future-forecast');
 
 var day1date = document.querySelector('#date1');
 var day1Icon = document.querySelector('#icon1');
@@ -153,4 +156,8 @@ city1.textContent = city.value
         event.preventDefault();
         fetchWeather();
         setCity();
+        mainWeather.classList.remove('hide');
+        historyCard.classList.remove('hide');
+        futureCard.classList.remove('hide');
+
     })
