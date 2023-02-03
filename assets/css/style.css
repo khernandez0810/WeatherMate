@@ -50,7 +50,7 @@ height: 200px;
 }
 
 .future-forecast{
-    height: 200px;
+    height: 500px;
     width: 950px;
 text-align:center;
 padding: 10px;
@@ -90,10 +90,15 @@ body {
 h1,
 h2,
 h3,
-h4,
 h5,
 h6 {
 	font-weight: 700;
+	margin: 0;
+	color: var(--dark);
+	line-height: 1.25;
+}
+.weather-box h4{
+	font-weight: 900;
 	margin: 0;
 	color: var(--dark);
 	line-height: 1.25;
@@ -106,6 +111,22 @@ main {
 
 p {
 	font-size: 1.2rem;
+	font-weight: 800;
+}
+.city-btn{
+	font-size: 1.3rem;
+	text-decoration: none;
+	padding: 6px 5px;
+	width: 100%;
+	display: block;
+	margin: 5px 0;
+	border-radius: var(--border-radius);
+	color: var(--primary);
+	border: none;
+	outline: none;
+	background-color: var(--light-dark);
+	box-shadow: 3px 3px var(--dark);
+	transform: translate(-1px, -1px);
 }
 
 .btn {

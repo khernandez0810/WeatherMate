@@ -43,11 +43,12 @@ var city = document.getElementById('city');
 var today = dayjs().format('dddd, MMMM D, YYYY');
 var todayDate = document.querySelector('#today'); 
 var city1 = document.getElementById('btn1');
+var cities = [];
+var searchList = document.getElementById('city-buttons')
 
 function fetchWeather() {
     var city = document.getElementById('city').value;
     console.log(city);
-    saveCity();
 
     var locationQuery = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&appid=afeb5de2076b8a55a907ef83c79b6a96'
     fetch(locationQuery)
@@ -59,7 +60,14 @@ function fetchWeather() {
             return response.json();
         })
         .then(function (data) {
+
             console.log(data);
+            var citySelection = data[0].name;
+            console.log(citySelection)
+            localStorage.setItem("cities", JSON.stringify(citySelection));
+            cities.push(citySelection);
+            console.log(cities)
+            addCities();
             var cityLon = data[0].lon;
             var cityLat = data[0].lat;
      
@@ -71,6 +79,7 @@ function fetchWeather() {
 
         })
         .then(function (data) {
+
             console.log(data);
             todayDate.textContent = today;
 
@@ -139,25 +148,27 @@ currentCityIcon.innerHTML = "<img src=http://openweathermap.org/img/wn/"+current
 
     })
 
-function saveCity(){
-localStorage.setItem('cities', city);
 };
+function addCities() {
+    JSON.parse(localStorage.getItem('cities'))
+    // Render a new li for each todo
+    for (var i = 0; i < cities.length; i++) {
+      var recentCity = cities[i++];
+  
+      var btn = document.createElement("button");
+      btn.textContent = recentCity;
+      btn.classList.add("city-btn");
+      searchList.appendChild(btn);
+    }
+  }
 
-}
 
-    
-function setCity(){
-    localStorage.getItem('cities', city)
-city1.textContent = city.value
-}
 
 
     searchBtn.addEventListener("click",function(event){
         event.preventDefault();
         fetchWeather();
-        setCity();
         mainWeather.classList.remove('hide');
         historyCard.classList.remove('hide');
-        futureCard.classList.remove('hide');
 
-    })
+    });
