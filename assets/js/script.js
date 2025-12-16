@@ -50,7 +50,7 @@ function fetchWeather() {
     var city = document.getElementById('city').value;
     console.log(city);
 
-    var locationQuery = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&appid=afeb5de2076b8a55a907ef83c79b6a96'
+    var locationQuery = 'https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&appid=afeb5de2076b8a55a907ef83c79b6a96'
     fetch(locationQuery)
         .then(function (response) {
             console.log(response)
@@ -64,10 +64,12 @@ function fetchWeather() {
             console.log(data);
             var citySelection = data[0].name;
             console.log(citySelection)
-            localStorage.setItem("cities", JSON.stringify(citySelection));
-            cities.push(citySelection);
-            console.log(cities)
-            addCities();
+if (!cities.includes(citySelection)) {
+  cities.push(citySelection);
+  localStorage.setItem("cities", JSON.stringify(cities));
+}
+addCities();
+console.log(cities);
             var cityLon = data[0].lon;
             var cityLat = data[0].lat;
      
@@ -85,7 +87,7 @@ function fetchWeather() {
 
             var currenticonCode = data.weather[0].icon; 
 console.log(currenticonCode);
-currentCityIcon.innerHTML = "<img src=http://openweathermap.org/img/wn/"+currenticonCode+"@2x.png>"
+currentCityIcon.innerHTML = "<img src=https://openweathermap.org/img/wn/"+currenticonCode+"@2x.png>"
           currentCity.textContent = data.name;
           currentCityTemp.textContent = "Temp (F)  " + data.main.temp;
           currentCityWind.textContent = "Wind Speed:  " + data.wind.speed + "  mph";
@@ -114,11 +116,11 @@ currentCityIcon.innerHTML = "<img src=http://openweathermap.org/img/wn/"+current
             var day4iconCode = data.list[29].weather[0].icon; 
             var day5iconCode = data.list[37].weather[0].icon; 
 
-            day1Icon.innerHTML = "<img src=http://openweathermap.org/img/wn/"+day1iconCode+"@2x.png>"
-            day2Icon.innerHTML = "<img src=http://openweathermap.org/img/wn/"+day2iconCode+"@2x.png>"
-            day3Icon.innerHTML = "<img src=http://openweathermap.org/img/wn/"+day3iconCode+"@2x.png>"
-            day4Icon.innerHTML = "<img src=http://openweathermap.org/img/wn/"+day4iconCode+"@2x.png>"
-            day5Icon.innerHTML = "<img src=http://openweathermap.org/img/wn/"+day5iconCode+"@2x.png>"
+            day1Icon.innerHTML = "<img src=https://openweathermap.org/img/wn/"+day1iconCode+"@2x.png>"
+            day2Icon.innerHTML = "<img src=https://openweathermap.org/img/wn/"+day2iconCode+"@2x.png>"
+            day3Icon.innerHTML = "<img src=https://openweathermap.org/img/wn/"+day3iconCode+"@2x.png>"
+            day4Icon.innerHTML = "<img src=https://openweathermap.org/img/wn/"+day4iconCode+"@2x.png>"
+            day5Icon.innerHTML = "<img src=https://openweathermap.org/img/wn/"+day5iconCode+"@2x.png>"
 
 
 
@@ -150,17 +152,17 @@ currentCityIcon.innerHTML = "<img src=http://openweathermap.org/img/wn/"+current
 
 };
 function addCities() {
-    JSON.parse(localStorage.getItem('cities'))
-    // Render a new li for each todo
-    for (var i = 0; i < cities.length; i++) {
-      var recentCity = cities[i++];
-  
-      var btn = document.createElement("button");
-      btn.textContent = recentCity;
-      btn.classList.add("city-btn");
-      searchList.appendChild(btn);
-    }
+  searchList.innerHTML = ""; // clear so you don’t re-add duplicates
+
+  for (var i = 0; i < cities.length; i++) {
+    var recentCity = cities[i]; // <-- remove the extra i++
+
+    var btn = document.createElement("button");
+    btn.textContent = recentCity;
+    btn.classList.add("city-btn");
+    searchList.appendChild(btn);
   }
+}
 
 
 
@@ -172,3 +174,12 @@ function addCities() {
         historyCard.classList.remove('hide');
 
     });
+    
+searchList.addEventListener("click", function (event) {
+  if (event.target.matches(".city-btn")) {
+    document.getElementById("city").value = event.target.textContent;
+    fetchWeather();
+    mainWeather.classList.remove('hide');
+    historyCard.classList.remove('hide');
+  }
+});
